@@ -1,0 +1,36 @@
+<Combine name="PlexView" fileversion="2.0" description="">
+  <Configurations active="Release">
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry configuration="Release" build="True" name="OpenMetaverse" />
+      <Entry configuration="Release" build="True" name="OpenMetaverseTypes" />
+      <Entry configuration="Release" build="True" name="OpenMetaverse.Utilities" />
+      <Entry configuration="Release" build="True" name="OpenMetaverse.StructuredData" />
+      <Entry configuration="Release" build="True" name="TestClient" />
+      <Entry configuration="Release" build="True" name="PlexView" />
+    </Configuration>
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry configuration="Debug" build="True" name="OpenMetaverse" />
+      <Entry configuration="Debug" build="True" name="OpenMetaverseTypes" />
+      <Entry configuration="Debug" build="True" name="OpenMetaverse.Utilities" />
+      <Entry configuration="Debug" build="True" name="OpenMetaverse.StructuredData" />
+      <Entry configuration="Debug" build="True" name="TestClient" />
+      <Entry configuration="Debug" build="True" name="PlexView" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="OpenMetaverse" single="True">
+    <Execute type="None" entry="OpenMetaverse" />
+    <Execute type="None" entry="OpenMetaverseTypes" />
+    <Execute type="None" entry="OpenMetaverse.Utilities" />
+    <Execute type="None" entry="OpenMetaverse.StructuredData" />
+    <Execute type="None" entry="TestClient" />
+    <Execute type="None" entry="PlexView" />
+  </StartMode>
+  <Entries>
+    <Entry filename="../PlexView/OpenMetaverse/OpenMetaverse.mdp" />
+    <Entry filename="../PlexView/OpenMetaverseTypes/OpenMetaverseTypes.mdp" />
+    <Entry filename="../PlexView/OpenMetaverse.Utilities/OpenMetaverse.Utilities.mdp" />
+    <Entry filename="../PlexView/OpenMetaverse.StructuredData/OpenMetaverse.StructuredData.mdp" />
+    <Entry filename="../PlexView/Programs/examples/TestClient/TestClient.mdp" />
+    <Entry filename="../PlexView/Programs/examples/PlexView/PlexView.mdp" />
+  </Entries>
+</Combine>
