@@ -59,7 +59,31 @@ namespace PlexView
 
 			lastRequest = DateTime.Now;
 			sessionID = Guid.NewGuid();
+			Settings.LOGIN_SERVER = creds.gridURL;
 			this.creds = creds;
-		}		
+		}
+		public void Login()
+		{
+			//setup a callback (delagate) as the lgon status changes
+			Network.LoginProgress += delegate(NetworkManager sender, LoginProgressEventArgs e)
+            {
+                if (e.Status == LoginStatus.Success)
+                {
+                    //@todo login successfull
+					Console.WriteLine ("Login Success "+sender.client.ToString());
+				}
+				else if (e.Status == LoginStatus.Failed)
+                {
+                    //@todo login failure
+					Console.WriteLine ("Login Failure");
+                }
+			};
+
+
+			Network.BeginLogin(new LoginParams(this, creds.first, creds.last, creds.pass, Constants.CHANNEL, Constants.VERSION));
+		}
+//		public bool IsLoggedIn()
+//		{
+//		}
 	}
 }

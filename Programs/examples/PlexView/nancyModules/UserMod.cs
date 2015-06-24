@@ -10,29 +10,21 @@ namespace PlexView
 	{
 		public UserMod () : base("/api")
 		{
+			//When the users requests to login
 			Post["/login"] = parameters => 
 			{
-				//process a login request
+				//parese their credentials
 				Creds creds = this.Bind<Creds>();
 
-				User client = ClientMgr.Instance.NewUser(creds);
+				//initiate login process
+				Guid sessionID = ClientMgr.Instance.NewUserLogin(creds);
 
-				if (ClientMgr.Instance.Login(client))
-	            {
-					Hashtable msg = new Hashtable();
-					msg.Add("status", "success");
-					msg.Add("motd", client.Network.LoginMessage);
-					msg.Add("sessionID", client.sessionID);
-					return msg;
-	            }
-	            else
-	            {
-					Hashtable msg = new Hashtable();
-					msg.Add("status", "fail");
-					msg.Add("motd", client.Network.LoginMessage);
-					msg.Add("sessionID", client.sessionID);
-					return msg;
-	            }
+				//tell them that we have started login
+				Hashtable msg = new Hashtable();
+				msg.Add("status", "login begin");
+				msg.Add("sessionID", sessionID);
+				return msg;
+
 			};
 
 			Post["/logout"] = parameters => 

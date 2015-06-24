@@ -18,19 +18,28 @@ namespace PlexView
 				return instance; 
 			}
 		}
+//		[Obsolete]
+//		public User NewUser(Creds creds)
+//		{
+//			User client = new User(creds);
+//			client.Settings.LOGIN_SERVER = creds.gridURL;
+//			//@todo if creds.gridName not in Grids list add it
+//			users.Add(client.sessionID, client);
+//			return client;
+//		}
 
-		public User NewUser(Creds creds)
+		//create a new user and begin the login process
+		public Guid NewUserLogin(Creds creds)
 		{
+			//create the user object
 			User client = new User(creds);
-			client.Settings.LOGIN_SERVER = creds.gridURL;
-			//@todo if creds.gridName not in Grids list add it
-			users.Add(client.sessionID, client);
-			return client;
-		}
 
-		public bool Login(User client)
-		{
-			return client.Network.Login(client.creds.first, client.creds.last, client.creds.pass, Constants.CHANNEL, Constants.VERSION);
+			//add the user to the list of users
+			users.Add(client.sessionID, client);
+			//initiate login
+			client.Login();
+			return client.sessionID;
+			
 		}
 
 		public bool Logout(Guid sessionID)
