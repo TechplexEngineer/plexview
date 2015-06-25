@@ -29,7 +29,7 @@ namespace PlexView
 //		}
 
 		//create a new user and begin the login process
-		public Guid NewUserLogin(Creds creds)
+		public Guid BeginNewUserLogin(Creds creds)
 		{
 			//create the user object
 			User client = new User(creds);
@@ -37,15 +37,19 @@ namespace PlexView
 			//add the user to the list of users
 			users.Add(client.sessionID, client);
 			//initiate login
-			client.Login();
+			client.BeginLogin();
 			return client.sessionID;
 			
 		}
 
-		public bool Logout(Guid sessionID)
+		public bool BeginLogout(Guid sessionID)
 		{
 			if (users.ContainsKey(sessionID)) {
-				users[sessionID].Network.Logout(); //@note this is a blocking call
+				//begin the logot process
+				users[sessionID].BeginLogout();
+
+				//remove the user from the active list
+				users.Remove(sessionID);
 				return true;
 			} else {
 				return false;

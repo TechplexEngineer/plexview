@@ -8,9 +8,6 @@ namespace PlexView
 {
 	public class PlexView
 	{
-
-//		public GridMgr grids;
-//		public ClientMgr clients;
 		public PlexView (string[] args)
 		{
 			//bootstrap the app here, initialize services, start http, get ready!

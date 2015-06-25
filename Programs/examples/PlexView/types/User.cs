@@ -62,26 +62,47 @@ namespace PlexView
 			Settings.LOGIN_SERVER = creds.gridURL;
 			this.creds = creds;
 		}
-		public void Login()
+		public void BeginLogin()
 		{
 			//setup a callback (delagate) as the lgon status changes
-			Network.LoginProgress += delegate(NetworkManager sender, LoginProgressEventArgs e)
+			Network.LoginProgress += delegate(object sender, LoginProgressEventArgs e)
             {
                 if (e.Status == LoginStatus.Success)
                 {
                     //@todo login successfull
-					Console.WriteLine ("Login Success "+sender.client.ToString());
+					Console.WriteLine ("Login Success for user "+GetAvatarName());
+					//send e.Message
 				}
 				else if (e.Status == LoginStatus.Failed)
                 {
                     //@todo login failure
 					Console.WriteLine ("Login Failure");
+					//send e.FailReason
                 }
 			};
 
 
 			Network.BeginLogin(new LoginParams(this, creds.first, creds.last, creds.pass, Constants.CHANNEL, Constants.VERSION));
 		}
+
+		public void BeginLogout()
+		{
+
+			Network.LoggedOut += delegate(object sender, LoggedOutEventArgs e) {
+				Console.WriteLine (String.Format("Logout for user {0}", GetAvatarName()));
+			};
+			Network.BeginLogout();
+		}
+
+		public string GetAvatarName()
+		{
+			if (! creds.last.Equals("Resident")) {
+				return String.Format("{0} {1}", creds.first, creds.last);
+			} else {
+				return String.Format("{0}", creds.first);
+			}
+		}
+		
 //		public bool IsLoggedIn()
 //		{
 //		}
