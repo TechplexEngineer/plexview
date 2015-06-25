@@ -51,9 +51,6 @@ namespace PlexView
 					msg.Add("sessionID", logout.sessionID);
 					return msg;
 				}
-
-
-
 			};
 		}
 	}

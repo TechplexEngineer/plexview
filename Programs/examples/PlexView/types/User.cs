@@ -40,6 +40,10 @@ namespace PlexView
 		public readonly Guid sessionID;
 		public readonly Creds creds;
 
+		private bool m_loggedIn = false;
+
+		private NearbyAvatarTracker tracker;
+
 		//@todo Instances of the client class should only be created by the ClientMgr
 		public User(Creds creds)
 		{
@@ -61,6 +65,7 @@ namespace PlexView
 			sessionID = Guid.NewGuid();
 			Settings.LOGIN_SERVER = creds.gridURL;
 			this.creds = creds;
+			tracker = new NearbyAvatarTracker(this);
 		}
 		public void BeginLogin()
 		{
@@ -71,6 +76,7 @@ namespace PlexView
                 {
                     //@todo login successfull
 					Console.WriteLine ("Login Success for user "+GetAvatarName());
+					this.m_loggedIn = true;
 					//send e.Message
 				}
 				else if (e.Status == LoginStatus.Failed)
@@ -78,6 +84,7 @@ namespace PlexView
                     //@todo login failure
 					Console.WriteLine ("Login Failure");
 					//send e.FailReason
+					this.m_loggedIn = false;
                 }
 			};
 
@@ -103,8 +110,9 @@ namespace PlexView
 			}
 		}
 		
-//		public bool IsLoggedIn()
-//		{
-//		}
+		public bool IsLoggedIn()
+		{
+			return m_loggedIn;
+		}
 	}
 }
